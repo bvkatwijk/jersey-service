@@ -1,0 +1,73 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+version = '0.0.1'
+group = "org.bvkatwijk.lib"
+description = "Jersey Microservice Setup"
+
+eclipse {
+	project {
+		natures 'org.springsource.ide.eclipse.gradle.core.nature'
+	}
+	classpath {
+		downloadSources = true
+		downloadJavadoc = true
+	}
+}
+
+test {
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+jar {
+	group project.group
+	baseName "jersey-service"
+	version project.version
+	
+	into ('web') {
+		from 'web'
+	}
+	
+	manifest {
+		attributes 'Implementation-Title': "Jersey Microservice Setup",
+					'Implementation-Version': version
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+	compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.24'
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-servlet', version: '2.24'
+	compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.24'
+	compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.3.14.v20161028'
+	compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.3.14.v20161028'
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
+	
+	testCompile group: 'junit', name: 'junit', version: '4.+'
+	testCompile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+}
