@@ -1,4 +1,4 @@
-package org.bvkatwijk.lib.micro;
+package org.bvkatwijk.micro.service.config;
 
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 

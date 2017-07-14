@@ -1,4 +1,7 @@
-package org.bvkatwijk.lib.micro;
+package org.bvkatwijk.micro.service.def;
+
+import org.bvkatwijk.micro.service.config.Configuration;
+import org.bvkatwijk.micro.service.config.NoConfiguration;
 
 public final class MicroServiceDefaults {
 

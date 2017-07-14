@@ -1,5 +1,8 @@
-package org.bvkatwijk.lib.micro;
+package org.bvkatwijk.micro.service;
 
+import org.bvkatwijk.micro.service.config.Configuration;
+import org.bvkatwijk.micro.service.def.MicroServiceDefaults;
+import org.bvkatwijk.micro.service.folder.HomepageFolderProvider;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -29,8 +32,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author borisk
  */
 @Slf4j
-@ToString
 @Builder
+@ToString
 @AllArgsConstructor
 public class MicroService {
 

@@ -1,4 +1,4 @@
-package org.bvkatwijk.lib.micro;
+package org.bvkatwijk.micro.service.folder;
 
 import java.net.URL;
 
