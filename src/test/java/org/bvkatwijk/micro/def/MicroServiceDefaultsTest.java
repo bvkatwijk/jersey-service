@@ -1,5 +1,6 @@
-package org.bvkatwijk.micro.service.def;
+package org.bvkatwijk.micro.def;
 
+import org.bvkatwijk.micro.def.MicroServiceDefaults;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package org.bvkatwijk.micro;
 
-import org.bvkatwijk.micro.service.MicroService;
-import org.bvkatwijk.micro.service.MicroService.MicroServiceBuilder;
+import org.bvkatwijk.micro.MicroService;
+import org.bvkatwijk.micro.MicroService.MicroServiceBuilder;
 
 public class TestMicroServices {
 

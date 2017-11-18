@@ -1,6 +1,6 @@
-package org.bvkatwijk.micro.service.config;
+package org.bvkatwijk.micro.config;
 
-import org.bvkatwijk.micro.service.mapper.MappingProviderFactory;
+import org.bvkatwijk.micro.mapper.MappingProviderFactory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 

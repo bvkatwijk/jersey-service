@@ -1,6 +1,6 @@
 package org.bvkatwijk.micro;
 
-import org.bvkatwijk.micro.service.MicroService;
+import org.bvkatwijk.micro.MicroService;
 import org.junit.Assert;
 import org.junit.Test;
 

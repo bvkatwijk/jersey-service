@@ -1,5 +1,6 @@
-package org.bvkatwijk.micro.service.folder;
+package org.bvkatwijk.micro.folder;
 
+import org.bvkatwijk.micro.folder.HomepageFolderProvider;
 import org.junit.Assert;
 import org.junit.Test;
 

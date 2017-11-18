@@ -1,4 +1,4 @@
-package org.bvkatwijk.micro.service.mapper;
+package org.bvkatwijk.micro.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

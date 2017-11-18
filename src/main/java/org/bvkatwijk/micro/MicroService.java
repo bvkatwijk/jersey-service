@@ -1,9 +1,9 @@
-package org.bvkatwijk.micro.service;
+package org.bvkatwijk.micro;
 
-import org.bvkatwijk.micro.service.config.Configuration;
-import org.bvkatwijk.micro.service.config.ResourceConfigFactory;
-import org.bvkatwijk.micro.service.def.MicroServiceDefaults;
-import org.bvkatwijk.micro.service.folder.HomepageFolderProvider;
+import org.bvkatwijk.micro.config.Configuration;
+import org.bvkatwijk.micro.config.ResourceConfigFactory;
+import org.bvkatwijk.micro.def.MicroServiceDefaults;
+import org.bvkatwijk.micro.folder.HomepageFolderProvider;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
