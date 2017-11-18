@@ -2,6 +2,7 @@ package org.bvkatwijk.micro;
 
 import org.bvkatwijk.micro.config.Configuration;
 import org.bvkatwijk.micro.config.ResourceConfigFactory;
+import org.bvkatwijk.micro.consume.Subject;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
 import org.bvkatwijk.micro.handler.ResourceHandlerFactory;
 import org.bvkatwijk.micro.server.ServerFactory;
@@ -64,10 +65,11 @@ public class MicroService {
 	 * @throws Exception when {@link Server#start()} does so.
 	 * @since 0.0.1
 	 */
-	public void start() throws Exception {
-		Server server = createServer();
-		server.start();
-		log.trace(server.dump());
+	public Server start() throws Exception {
+		return new Subject<Server>()
+				.lendTo(it -> it.start())
+				.lendTo(it -> log.trace(it.dump()))
+				.apply(createServer());
 	}
 
 	private ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
