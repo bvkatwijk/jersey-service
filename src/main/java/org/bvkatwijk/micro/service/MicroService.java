@@ -3,6 +3,7 @@ package org.bvkatwijk.micro.service;
 import org.bvkatwijk.micro.service.config.Configuration;
 import org.bvkatwijk.micro.service.def.MicroServiceDefaults;
 import org.bvkatwijk.micro.service.folder.HomepageFolderProvider;
+import org.bvkatwijk.micro.service.mapper.MappingProviderFactory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -15,10 +16,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -81,20 +78,10 @@ public class MicroService {
 
 	private ResourceConfig createResourceConfig() {
 		return new ResourceConfig()
-				.register(createProvider())
+				.register(new MappingProviderFactory().create())
 				.register(bindings())
 				.packages(servletPackage)
 				.setApplicationName(applicationName);
-	}
-
-	private static JacksonJaxbJsonProvider createProvider() {
-		JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-		provider.setMapper(createObjectMapper());
-		return provider;
-	}
-
-	private static ObjectMapper createObjectMapper() {
-		return new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 	}
 
 	private AbstractBinder bindings() {
