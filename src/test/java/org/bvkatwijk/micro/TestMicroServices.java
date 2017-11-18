@@ -1,4 +1,4 @@
-package org.bvkatwijk.lib.micro;
+package org.bvkatwijk.micro;
 
 import org.bvkatwijk.micro.service.MicroService;
 import org.bvkatwijk.micro.service.MicroService.MicroServiceBuilder;
@@ -14,4 +14,5 @@ public class TestMicroServices {
 				.servletsUrlPath("api")
 				.servletPackage("org.bvkatwijk.micro");
 	}
+
 }
