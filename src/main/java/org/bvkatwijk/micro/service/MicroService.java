@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * MicroService blueprint. Use builder for fluid initialization. All fields have
  * some default value set. Call {@link #start()} after construction.
  *
- * @author borisk
+ * @author bvkatwijk
  */
 @Slf4j
 @Builder
