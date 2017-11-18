@@ -1,9 +1,9 @@
 package org.bvkatwijk.micro.service;
 
 import org.bvkatwijk.micro.service.config.Configuration;
+import org.bvkatwijk.micro.service.config.ResourceConfigFactory;
 import org.bvkatwijk.micro.service.def.MicroServiceDefaults;
 import org.bvkatwijk.micro.service.folder.HomepageFolderProvider;
-import org.bvkatwijk.micro.service.mapper.MappingProviderFactory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -13,7 +13,6 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -66,8 +65,7 @@ public class MicroService {
 	/**
 	 * Start a {@link Server} hosting this {@link MicroService}
 	 *
-	 * @throws Exception
-	 *             when {@link Server#start()} does so.
+	 * @throws Exception when {@link Server#start()} does so.
 	 * @since 0.0.1
 	 */
 	public void start() throws Exception {
@@ -77,20 +75,8 @@ public class MicroService {
 	}
 
 	private ResourceConfig createResourceConfig() {
-		return new ResourceConfig()
-				.register(new MappingProviderFactory().create())
-				.register(bindings())
-				.packages(servletPackage)
-				.setApplicationName(applicationName);
-	}
-
-	private AbstractBinder bindings() {
-		return new AbstractBinder() {
-			@Override
-			protected void configure() {
-				configuration.configure(this);
-			}
-		};
+		return new ResourceConfigFactory(configuration, servletPackage, applicationName)
+				.createResourceConfig();
 	}
 
 	private static ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
