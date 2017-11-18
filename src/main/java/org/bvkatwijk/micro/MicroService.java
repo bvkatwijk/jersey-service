@@ -2,17 +2,11 @@ package org.bvkatwijk.micro;
 
 import org.bvkatwijk.micro.config.Configuration;
 import org.bvkatwijk.micro.config.ResourceConfigFactory;
-import org.bvkatwijk.micro.consume.ConsumingFunction;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
-import org.bvkatwijk.micro.folder.HomepageFolderProvider;
+import org.bvkatwijk.micro.handler.ResourceHandlerFactory;
+import org.bvkatwijk.micro.server.ServerFactory;
 import org.bvkatwijk.micro.servlet.context.ServletContextHandlerFactory;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.RequestLogHandler;
-import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -76,48 +70,29 @@ public class MicroService {
 		log.trace(server.dump());
 	}
 
-	private ResourceConfig createResourceConfig() {
-		return new ResourceConfigFactory(configuration, servletPackage, applicationName)
-				.createResourceConfig();
-	}
-
-	private static ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
+	private ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
 		ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(jerseyApplication));
 		jerseyServlet.setInitOrder(0);
 		return jerseyServlet;
 	}
 
-	private Handler createGzipHandler(ServletContextHandler context) {
-		GzipHandler gzipHandler = new GzipHandler();
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] {
-				createResourceHandler(),
-				context,
-				new DefaultHandler(),
-				new RequestLogHandler() });
-		gzipHandler.setHandler(handlers);
-		return gzipHandler;
-	}
-
-	private ResourceHandler createResourceHandler() {
-		return ConsumingFunction.<ResourceHandler>identity()
-				.andThen(it -> it.setDirectoriesListed(true))
-				.andThen(it -> it.setWelcomeFiles(new String[] { homePageFileName }))
-				.andThen(it -> it.setResourceBase(new HomepageFolderProvider(mainClass, homePageFolder).get()))
-				.apply(new ResourceHandler());
-	}
-
 	private Server createServer() {
-		ServletHolder createServletHolder = MicroService.createServletHolder(createResourceConfig());
-		return setup(
-				new Server(port),
-				new ServletContextHandlerFactory(createServletHolder, servletsUrlPath).get());
+		return new ServerFactory(
+				port,
+				createServletContextHandler(),
+				new ResourceHandlerFactory(homePageFileName, mainClass, homePageFolder).createResourceHandler())
+				.get();
 	}
 
-	private Server setup(Server server, ServletContextHandler context) {
-		server.setHandler(context);
-		server.setHandler(createGzipHandler(context));
-		return server;
+	private ServletContextHandler createServletContextHandler() {
+		return new ServletContextHandlerFactory(
+				createServletHolder(createResourceConfig()),
+				servletsUrlPath).get();
+	}
+
+	private ResourceConfig createResourceConfig() {
+		return new ResourceConfigFactory(configuration, servletPackage, applicationName)
+				.createResourceConfig();
 	}
 
 }

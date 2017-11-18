@@ -2,7 +2,7 @@ package org.bvkatwijk.micro.servlet.context;
 
 import java.util.function.Supplier;
 
-import org.bvkatwijk.micro.consume.ConsumingFunction;
+import org.bvkatwijk.micro.consume.Subject;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
@@ -17,8 +17,8 @@ public class ServletContextHandlerFactory implements Supplier<ServletContextHand
 
 	@Override
 	public ServletContextHandler get() {
-		return ConsumingFunction.<ServletContextHandler>identity()
-				.andThen(it -> it.addServlet(servletHolder, servletsUrlPath))
+		return new Subject<ServletContextHandler>()
+				.lendTo(it -> it.addServlet(servletHolder, servletsUrlPath))
 				.apply(new ServletContextHandler(ServletContextHandler.SESSIONS));
 	}
 
