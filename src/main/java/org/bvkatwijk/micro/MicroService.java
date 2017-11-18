@@ -2,6 +2,7 @@ package org.bvkatwijk.micro;
 
 import org.bvkatwijk.micro.config.Configuration;
 import org.bvkatwijk.micro.config.ResourceConfigFactory;
+import org.bvkatwijk.micro.consume.ConsumingFunction;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
 import org.bvkatwijk.micro.folder.HomepageFolderProvider;
 import org.bvkatwijk.micro.servlet.context.ServletContextHandlerFactory;
@@ -99,11 +100,11 @@ public class MicroService {
 	}
 
 	private ResourceHandler createResourceHandler() {
-		ResourceHandler resourceHandler = new ResourceHandler();
-		resourceHandler.setDirectoriesListed(true);
-		resourceHandler.setWelcomeFiles(new String[] { homePageFileName });
-		resourceHandler.setResourceBase(new HomepageFolderProvider(mainClass, homePageFolder).get());
-		return resourceHandler;
+		return ConsumingFunction.<ResourceHandler>identity()
+				.andThen(it -> it.setDirectoriesListed(true))
+				.andThen(it -> it.setWelcomeFiles(new String[] { homePageFileName }))
+				.andThen(it -> it.setResourceBase(new HomepageFolderProvider(mainClass, homePageFolder).get()))
+				.apply(new ResourceHandler());
 	}
 
 	private Server createServer() {
@@ -114,7 +115,6 @@ public class MicroService {
 	}
 
 	private Server setup(Server server, ServletContextHandler context) {
-		context.addServlet(MicroService.createServletHolder(createResourceConfig()), servletsUrlPath);
 		server.setHandler(context);
 		server.setHandler(createGzipHandler(context));
 		return server;
