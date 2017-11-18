@@ -18,7 +18,6 @@ public class ServletContextHandlerFactory implements Supplier<ServletContextHand
 	@Override
 	public ServletContextHandler get() {
 		return ConsumingFunction.<ServletContextHandler>identity()
-				.andThen(it -> it.setContextPath("/"))
 				.andThen(it -> it.addServlet(servletHolder, servletsUrlPath))
 				.apply(new ServletContextHandler(ServletContextHandler.SESSIONS));
 	}
