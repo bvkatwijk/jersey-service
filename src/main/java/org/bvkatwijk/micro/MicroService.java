@@ -4,6 +4,7 @@ import org.bvkatwijk.micro.config.Configuration;
 import org.bvkatwijk.micro.config.ResourceConfigFactory;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
 import org.bvkatwijk.micro.folder.HomepageFolderProvider;
+import org.bvkatwijk.micro.servlet.context.ServletContextHandlerFactory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -106,9 +107,10 @@ public class MicroService {
 	}
 
 	private Server createServer() {
+		ServletHolder createServletHolder = MicroService.createServletHolder(createResourceConfig());
 		return setup(
 				new Server(port),
-				createServletContextHandler());
+				new ServletContextHandlerFactory(createServletHolder, servletsUrlPath).get());
 	}
 
 	private Server setup(Server server, ServletContextHandler context) {
@@ -118,9 +120,4 @@ public class MicroService {
 		return server;
 	}
 
-	private ServletContextHandler createServletContextHandler() {
-		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		context.setContextPath("/");
-		return context;
-	}
 }
