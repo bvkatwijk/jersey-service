@@ -79,12 +79,6 @@ public class MicroService {
 		log.trace(server.dump());
 	}
 
-	private void setup(Server server, ServletContextHandler context) {
-		context.addServlet(createServletHolder(createResourceConfig()), servletsUrlPath);
-		server.setHandler(context);
-		server.setHandler(createGzipHandler(context));
-	}
-
 	private ResourceConfig createResourceConfig() {
 		return new ResourceConfig()
 				.register(createProvider())
@@ -139,10 +133,21 @@ public class MicroService {
 	}
 
 	private Server createServer() {
+		return setup(
+				new Server(port),
+				createServletContextHandler());
+	}
+
+	private Server setup(Server server, ServletContextHandler context) {
+		context.addServlet(MicroService.createServletHolder(createResourceConfig()), servletsUrlPath);
+		server.setHandler(context);
+		server.setHandler(createGzipHandler(context));
+		return server;
+	}
+
+	private ServletContextHandler createServletContextHandler() {
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/");
-		Server server = new Server(port);
-		setup(server, context);
-		return server;
+		return context;
 	}
 }
