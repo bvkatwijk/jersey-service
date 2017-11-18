@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Lender pattern for  not exposing a mutable object in local scope.
- * @author boris
+ * Useful for defining a chain of operations and subsequently returning
+ * the original object, i.e. pojo configuration.
+ *
+ * @author bvkatwijk
  *
  * @param <T> Type of object to be lended to consumers
  */
