@@ -36,7 +36,7 @@ public class SubjectTest {
 	}
 
 	@Test
-	public void subject_withTwoOperations_shouldHaveExecutedCorrectly() {
+	public void subject_withTwoOperations_shouldHaveExecutedCorrectAmount() {
 		Assert.assertEquals(2, TWO_OPS.size());
 	}
 
