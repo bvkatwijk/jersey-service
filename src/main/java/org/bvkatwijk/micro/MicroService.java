@@ -57,10 +57,10 @@ public class MicroService {
 	/**
 	 * Start a {@link Server} hosting this {@link MicroService}
 	 *
-	 * @throws Exception when {@link Server#start()} does so.
+	 * @throws IllegalStateException when {@link Server#start()} does so.
 	 * @since 0.0.1
 	 */
-	public Server start() throws Exception {
+	public Server start() {
 		return new Subject<Server>()
 				.lendTo(it -> start(it))
 				.lendTo(it -> log.trace(it.dump()))
