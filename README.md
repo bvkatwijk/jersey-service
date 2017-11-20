@@ -14,7 +14,7 @@ MicroService.builder(this.getClass())
 
 # Options
 
-AMicroService fields have defaults which can be altered using the builder pattern:
+MicroService fields have defaults which can be altered using the builder pattern:
 
 ```java
 MicroService.builder(this.class) //Reference your base class
