@@ -14,7 +14,7 @@ import com.mashape.unirest.http.Unirest;
 
 public class TestMicroServices {
 
-	private static final int randomPort = (int) (Math.random() * 10000);
+	public static final int randomPort = (int) (Math.random() * 10000);
 
 	@Path("/test")
 	@Produces(MediaType.TEXT_PLAIN)

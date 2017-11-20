@@ -15,7 +15,7 @@ public class MicroServiceBuilderObjectTest {
 
 	@Test
 	public void microServiceToString_showsPort() {
-		Assert.assertTrue(microServiceBuilder.toString().contains("8080"));
+		Assert.assertTrue(microServiceBuilder.toString().contains("" + TestMicroServices.randomPort));
 	}
 
 	@Test

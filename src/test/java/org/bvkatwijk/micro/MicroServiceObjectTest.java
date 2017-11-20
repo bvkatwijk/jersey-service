@@ -1,6 +1,5 @@
 package org.bvkatwijk.micro;
 
-import org.bvkatwijk.micro.MicroService;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class MicroServiceObjectTest {
 
 	@Test
 	public void microServiceToString_showsPort() {
-		Assert.assertTrue(microService.toString().contains("8080"));
+		Assert.assertTrue(microService.toString().contains("" + TestMicroServices.randomPort));
 	}
 
 	@Test
