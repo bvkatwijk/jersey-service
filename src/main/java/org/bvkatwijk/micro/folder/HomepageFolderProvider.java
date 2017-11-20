@@ -2,6 +2,7 @@ package org.bvkatwijk.micro.folder;
 
 import java.net.URL;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class HomepageFolderProvider {
 
-	private final Class<?> mainClass;
-	private final String homePageFolder;
+	private final @NonNull Class<?> mainClass;
+	private final @NonNull String homePageFolder;
 
 	public String get() {
 		return getRelativeHomepageFolder() == null ? getDebugHomepageFolder() : getProductionHomepageFolder();

@@ -1,6 +1,5 @@
 package org.bvkatwijk.micro.folder;
 
-import org.bvkatwijk.micro.folder.HomepageFolderProvider;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,12 +10,12 @@ public class HomepageFolderProviderTest {
 
 	@Test(expected = NullPointerException.class)
 	public void homepageFolderProvider_shouldThrow_whenNullClassProvided() {
-		new HomepageFolderProvider(null, "web").get();
+		new HomepageFolderProvider(null, "web");
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void homepageFolderProvider_shouldThrow_whenNullFolderProvided() {
-		new HomepageFolderProvider(HomepageFolderProviderTest.class, null).get();
+		new HomepageFolderProvider(HomepageFolderProviderTest.class, null);
 	}
 
 	@Test
