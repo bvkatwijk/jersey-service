@@ -67,9 +67,17 @@ public class MicroService {
 	 */
 	public Server start() throws Exception {
 		return new Subject<Server>()
-				.lendTo(it -> it.start())
+				.lendTo(it -> start(it))
 				.lendTo(it -> log.trace(it.dump()))
 				.apply(createServer());
+	}
+
+	private void start(Server server) {
+		try {
+			server.start();
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
 	}
 
 	private ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
