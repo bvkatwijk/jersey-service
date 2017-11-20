@@ -1,5 +1,6 @@
 package org.bvkatwijk.micro.config;
 
+import org.bvkatwijk.micro.MicroService;
 import org.bvkatwijk.micro.mapper.MappingProviderFactory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -28,6 +29,14 @@ public class ResourceConfigFactory {
 				configuration.configure(this);
 			}
 		};
+	}
+
+	public static ResourceConfig createFor(MicroService service) {
+		return new ResourceConfigFactory(
+				service.getConfiguration(),
+				service.getServletPackage(),
+				service.getApplicationName())
+				.createResourceConfig();
 	}
 
 }
