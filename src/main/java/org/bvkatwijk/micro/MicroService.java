@@ -1,17 +1,10 @@
 package org.bvkatwijk.micro;
 
 import org.bvkatwijk.micro.config.Configuration;
-import org.bvkatwijk.micro.config.ResourceConfigFactory;
 import org.bvkatwijk.micro.consume.Subject;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
-import org.bvkatwijk.micro.handler.ResourceHandlerFactory;
 import org.bvkatwijk.micro.server.ServerFactory;
-import org.bvkatwijk.micro.servlet.context.ServletContextHandlerFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,7 +64,7 @@ public class MicroService {
 		return new Subject<Server>()
 				.lendTo(it -> start(it))
 				.lendTo(it -> log.trace(it.dump()))
-				.apply(createServer());
+				.apply(ServerFactory.createFor(this));
 	}
 
 	private void start(Server server) {
@@ -80,26 +73,6 @@ public class MicroService {
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
-	}
-
-	private ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
-		ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(jerseyApplication));
-		jerseyServlet.setInitOrder(0);
-		return jerseyServlet;
-	}
-
-	private Server createServer() {
-		return new ServerFactory(
-				port,
-				createServletContextHandler(),
-				new ResourceHandlerFactory(homePageFileName, mainClass, homePageFolder).createResourceHandler())
-				.get();
-	}
-
-	private ServletContextHandler createServletContextHandler() {
-		return new ServletContextHandlerFactory(
-				createServletHolder(ResourceConfigFactory.createFor(this)),
-				servletsUrlPath).get();
 	}
 
 }
