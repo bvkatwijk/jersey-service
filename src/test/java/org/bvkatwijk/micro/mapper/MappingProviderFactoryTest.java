@@ -6,8 +6,8 @@ import org.junit.Test;
 public class MappingProviderFactoryTest {
 
 	@Test
-	public void factory_shouldCreateMappingProviderWithObjectMapperSet() {
-		Assert.assertNotNull(new MappingProviderFactory().create().locateMapper(null, null));
+	public void factory_shouldCreateMappingProvider() {
+		Assert.assertNotNull(MappingProviderFactory.create());
 	}
 
 }

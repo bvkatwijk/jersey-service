@@ -17,7 +17,7 @@ public class ResourceConfigFactory {
 
 	public ResourceConfig createResourceConfig() {
 		return new ResourceConfig()
-				.register(new MappingProviderFactory().create())
+				.register(MappingProviderFactory.create())
 				.register(bindings())
 				.packages(servletPackage)
 				.setApplicationName(applicationName);

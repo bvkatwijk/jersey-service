@@ -1,20 +1,18 @@
 package org.bvkatwijk.micro.mapper;
 
-import org.bvkatwijk.micro.consume.Subject;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
-public class MappingProviderFactory {
+public final class MappingProviderFactory {
 
-	public JacksonJaxbJsonProvider create() {
-		return new Subject<JacksonJaxbJsonProvider>()
-				.lendTo(it -> it.setMapper(createObjectMapper()))
-				.apply(new JacksonJaxbJsonProvider());
+	public static JacksonJaxbJsonProvider create() {
+		return new JacksonJaxbJsonProvider(
+				MappingProviderFactory.createObjectMapper(),
+				JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS);
 	}
 
-	private ObjectMapper createObjectMapper() {
+	private static ObjectMapper createObjectMapper() {
 		return new ObjectMapper()
 				.enable(SerializationFeature.INDENT_OUTPUT);
 	}
