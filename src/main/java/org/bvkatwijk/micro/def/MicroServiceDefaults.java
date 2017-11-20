@@ -13,8 +13,4 @@ public final class MicroServiceDefaults {
 	public static final int PORT_NUMBER = 8080;
 	public static final Configuration CONFIGURATION = new NoConfiguration();
 
-	private MicroServiceDefaults() {
-		throw new AssertionError(this.getClass().getSimpleName() + " not to be instantiated.");
-	}
-
 }
