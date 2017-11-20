@@ -25,4 +25,6 @@ MicroService.builder(this.class) //Reference your base class
     .port(8080) //Application Target Port
     .servletsUrlPath("/api/*") //Desired API subpath
     .servletPackage("your.servlets.package") //Jersey API source package
+    .build()
+    .start();
 ```
