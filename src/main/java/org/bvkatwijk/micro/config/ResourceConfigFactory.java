@@ -5,12 +5,13 @@ import org.bvkatwijk.micro.mapper.MappingProviderFactory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ResourceConfigFactory {
 
-	private final Configuration configuration;
+	private final @NonNull Configuration configuration;
 	private final String servletPackage;
 	private final String applicationName;
 
