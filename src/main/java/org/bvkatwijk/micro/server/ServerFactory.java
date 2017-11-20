@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import org.bvkatwijk.micro.MicroService;
 import org.bvkatwijk.micro.config.ResourceConfigFactory;
+import org.bvkatwijk.micro.consume.Subject;
 import org.bvkatwijk.micro.handler.ResourceHandlerFactory;
 import org.bvkatwijk.micro.servlet.context.ServletContextHandlerFactory;
 import org.eclipse.jetty.server.Handler;
@@ -30,25 +31,29 @@ public class ServerFactory implements Supplier<Server> {
 
 	@Override
 	public Server get() {
-		Server server = new Server(port);
-		server.setHandler(createGzipHandler());
-		return server;
+		return new Subject<Server>()
+				.lendTo(it -> it.setHandler(createGzipHandler()))
+				.apply(new Server(port));
 	}
 
 	private Handler createGzipHandler() {
-		GzipHandler gzipHandler = new GzipHandler();
-		gzipHandler.setHandler(createHandlerList());
-		return gzipHandler;
+		return new Subject<GzipHandler>()
+				.lendTo(it -> it.setHandler(createHandlerList()))
+				.apply(new GzipHandler());
 	}
 
 	private HandlerList createHandlerList() {
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] {
+		return new Subject<HandlerList>()
+				.lendTo(it -> it.setHandlers(createHandlerArray()))
+				.apply(new HandlerList());
+	}
+
+	private Handler[] createHandlerArray() {
+		return new Handler[] {
 				resouceHandler,
 				context,
 				new DefaultHandler(),
-				new RequestLogHandler() });
-		return handlers;
+				new RequestLogHandler() };
 	}
 
 	public static Server createFor(MicroService microService) {
@@ -70,9 +75,9 @@ public class ServerFactory implements Supplier<Server> {
 	}
 
 	private static ServletHolder createServletHolder(ResourceConfig jerseyApplication) {
-		ServletHolder jerseyServlet = new ServletHolder(new ServletContainer(jerseyApplication));
-		jerseyServlet.setInitOrder(0);
-		return jerseyServlet;
+		return new Subject<ServletHolder>()
+				.lendTo(it -> it.setInitOrder(0))
+				.apply(new ServletHolder(new ServletContainer(jerseyApplication)));
 	}
 
 }
