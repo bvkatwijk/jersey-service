@@ -37,9 +37,9 @@ public class TestMicroServices {
 	public static MicroServiceBuilder getStandardMicroServiceBuilder() {
 		return MicroService.builder(TestMicroServices.class)
 				.applicationName("Test Application")
-				.port(randomPort)
 				.homePageFileName("index.html")
 				.homePageFolder("web")
+				.port(randomPort)
 				.servletsUrlPath("/api/*")
 				.servletPackage("org.bvkatwijk.micro");
 	}
