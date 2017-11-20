@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
-public final class MappingProviderFactory {
+public class MappingProviderFactory {
 
 	public static JacksonJaxbJsonProvider create() {
 		return new JacksonJaxbJsonProvider(
