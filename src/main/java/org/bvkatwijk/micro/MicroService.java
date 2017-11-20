@@ -15,6 +15,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Builder
 @ToString
+@Getter
 @AllArgsConstructor
 public class MicroService {
 
@@ -96,13 +98,8 @@ public class MicroService {
 
 	private ServletContextHandler createServletContextHandler() {
 		return new ServletContextHandlerFactory(
-				createServletHolder(createResourceConfig()),
+				createServletHolder(ResourceConfigFactory.createFor(this)),
 				servletsUrlPath).get();
-	}
-
-	private ResourceConfig createResourceConfig() {
-		return new ResourceConfigFactory(configuration, servletPackage, applicationName)
-				.createResourceConfig();
 	}
 
 }
