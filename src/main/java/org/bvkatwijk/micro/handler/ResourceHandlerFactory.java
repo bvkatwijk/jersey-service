@@ -6,14 +6,15 @@ import org.bvkatwijk.micro.consume.Subject;
 import org.bvkatwijk.micro.folder.HomepageFolderProvider;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ResourceHandlerFactory {
 
-	private final String homepageFileName;
-	private final Class<?> mainClass;
-	private final String homepageFolder;
+	private final @NonNull String homepageFileName;
+	private final @NonNull Class<?> mainClass;
+	private final @NonNull String homepageFolder;
 
 	public ResourceHandler createResourceHandler() {
 		return new Subject<ResourceHandler>()
