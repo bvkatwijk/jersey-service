@@ -17,15 +17,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Subject<T> {
 
-	private final Function<T, T> operations = Function.identity();
+	private final Function<T, T> operations;
 
-	public static <T> Subject<T> identity() {
-		return new Subject<>();
+	public Subject() {
+		this(Function.identity());
 	}
 
 	public Subject<T> lendTo(Consumer<T> consumer) {
-		operations.andThen(t -> { consumer.accept(t); return t;});
-		return this;
+		return new Subject<T>(
+				operations.andThen(t -> {
+					consumer.accept(t);
+					return t;
+				}));
 	}
 
 	public T apply(T t) {
