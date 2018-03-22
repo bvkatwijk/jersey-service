@@ -1,5 +1,7 @@
 package org.bvkatwijk.micro;
 
+import java.util.Set;
+
 import org.bvkatwijk.micro.config.Configuration;
 import org.bvkatwijk.micro.consume.Subject;
 import org.bvkatwijk.micro.def.MicroServiceDefaults;
@@ -30,13 +32,16 @@ public class MicroService {
 	private final String homePageFolder;
 	private final String homePageFileName;
 	private final String applicationName;
+	private final Set<Class<?>> additionalProviders;
 	private final int port;
 	private final String servletPackage;
 	private final Configuration configuration;
 
 	/**
 	 * Initialize MicroService Builder
-	 * @param mainClass Application root class
+	 *
+	 * @param mainClass
+	 *            Application root class
 	 */
 	public static MicroServiceBuilder builder(Class<?> mainClass) {
 		return new MicroServiceBuilder().mainClass(mainClass);
@@ -49,6 +54,7 @@ public class MicroService {
 		private String homePageFileName = MicroServiceDefaults.HOME_PAGE_FILENAME;
 		private String applicationName = MicroServiceDefaults.APPLICATION_NAME;
 		private String servletPackage = MicroServiceDefaults.SERVLET_PACKAGE;
+		private Set<Class<?>> additionalProviders = MicroServiceDefaults.ADDITIONAL_PROVIDERS;
 		private int port = MicroServiceDefaults.PORT_NUMBER;
 		private Configuration configuration = MicroServiceDefaults.CONFIGURATION;
 
@@ -57,7 +63,8 @@ public class MicroService {
 	/**
 	 * Start a {@link Server} hosting this {@link MicroService}
 	 *
-	 * @throws IllegalStateException when {@link Server#start()} does so.
+	 * @throws IllegalStateException
+	 *             when {@link Server#start()} does so.
 	 * @since 0.0.1
 	 */
 	public Server start() {
