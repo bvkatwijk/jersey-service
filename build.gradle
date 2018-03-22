@@ -8,7 +8,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.9
 version = '0.0.1'
 group = "org.bvkatwijk.lib"
 description = "Jersey Microservice Setup"
