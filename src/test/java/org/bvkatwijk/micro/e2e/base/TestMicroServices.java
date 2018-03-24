@@ -64,6 +64,15 @@ public class TestMicroServices {
 						.getStatus());
 	}
 
+	@Test
+	public void microService_getHeaders_shouldNotHaveAdditionalFilters() throws Exception {
+		Assert.assertEquals(null,
+				Unirest.get("http://localhost:" + randomPort + "/api/test")
+						.asString()
+						.getHeaders()
+						.get("Access-Control-Allow-Origin"));
+	}
+
 	@AfterClass
 	public static void stopServer() throws Exception {
 		server.stop();

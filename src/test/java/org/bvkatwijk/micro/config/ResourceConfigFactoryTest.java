@@ -13,7 +13,8 @@ public class ResourceConfigFactoryTest {
 		new ResourceConfigFactory(
 				null,
 				"servletPackage",
-				"applicationName");
+				"applicationName",
+				null);
 	}
 
 	@Test
@@ -25,8 +26,9 @@ public class ResourceConfigFactoryTest {
 		return new ResourceConfigFactory(
 				new NoConfiguration(),
 				null,
-				"applicationName")
-				.createResourceConfig();
+				"applicationName",
+				null)
+						.createResourceConfig();
 	}
 
 }

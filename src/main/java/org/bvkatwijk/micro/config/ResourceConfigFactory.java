@@ -1,5 +1,7 @@
 package org.bvkatwijk.micro.config;
 
+import java.util.Set;
+
 import org.bvkatwijk.micro.MicroService;
 import org.bvkatwijk.micro.mapper.MappingProviderFactory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -14,20 +16,23 @@ public class ResourceConfigFactory {
 	private final @NonNull Configuration configuration;
 	private final String servletPackage;
 	private final String applicationName;
+	private final Set<Class<?>> additionalClasses;
 
 	public ResourceConfig createResourceConfig() {
 		return new ResourceConfig()
 				.register(MappingProviderFactory.create())
+				.registerClasses(this.additionalClasses)
 				.register(bindings())
-				.packages(servletPackage)
-				.setApplicationName(applicationName);
+				.packages(this.servletPackage)
+				.setApplicationName(this.applicationName);
 	}
 
 	private AbstractBinder bindings() {
 		return new AbstractBinder() {
+
 			@Override
 			protected void configure() {
-				configuration.configure(this);
+				ResourceConfigFactory.this.configuration.configure(this);
 			}
 		};
 	}
@@ -36,8 +41,9 @@ public class ResourceConfigFactory {
 		return new ResourceConfigFactory(
 				service.getConfiguration(),
 				service.getServletPackage(),
-				service.getApplicationName())
-				.createResourceConfig();
+				service.getApplicationName(),
+				service.getAdditionalProviders())
+						.createResourceConfig();
 	}
 
 }
